@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\monab\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\monab\\.nuget\\packages"
+    ]
+  }
+}
