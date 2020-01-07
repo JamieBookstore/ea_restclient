@@ -1,32 +1,18 @@
 ﻿using RestClient;
 using RestClient.Dto;
-using System;
-using System.Collections.Generic;
+using RestClientApp.Dto;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace RestClientApp
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private const string _fh = "http://10.0.51.92/fh-ticket-server/event/list";
-        private const string _local = "http://localhost:8080/fh-ticket-server/event/list";
+        private const string _fh = "http://10.0.51.92:8080/fh-ticket-server/event/";
+        private const string _local = "http://localhost:8080/fh-ticket-server/event/";
 
         private ObservableCollection<EventDto> _events;
 
@@ -57,7 +43,14 @@ namespace RestClientApp
             server = item.Content.ToString() == "FH" ? _fh : _local;
 
             SelectedValue = server;
-            _events = new ObservableCollection<EventDto>(await request.GetEvents(server));
+            try
+            {
+                _events = new ObservableCollection<EventDto>(await request.GetEvents(server + "list"));
+            }
+            catch (System.Net.Http.HttpRequestException ex)
+            {
+                MessageBox.Show(ex.Message, "Exception occured", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
             events.ItemsSource = _events;
             events.Items.Refresh();
         }
@@ -68,6 +61,25 @@ namespace RestClientApp
             {
                 handler(this, new PropertyChangedEventArgs(name));
             }
+        }
+
+        private async void DataGridRow_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            DataGridRow row = sender as DataGridRow;
+            EventDto eventDto = row.Item as EventDto;
+
+            string eventId = eventDto.Id.ToString();
+            RestRequest request = new RestRequest();
+
+            string server = null;
+            ComboBoxItem item = serverSelect.SelectedItem as ComboBoxItem;
+            server = item.Content.ToString() == "FH" ? _fh : _local;
+
+            EventDetailDto detailDto = await request.GetEvent(server + eventId);
+
+            DetailWindow window = new DetailWindow(detailDto);
+
+            window.ShowDialog();
         }
     }
 }

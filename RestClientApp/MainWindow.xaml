@@ -12,12 +12,17 @@
                 <ComboBoxItem Content="FH"/>
                 <ComboBoxItem Content="Local"/>
             </ComboBox>
-            <Button Content="Get Events"  Click="Button_Click" />
             <Label Content="{Binding SelectedValue, Mode=TwoWay}"/>
+            <Button Content="Get Events"  Click="Button_Click" />
         </StackPanel>
-            <DataGrid x:Name="events" AutoGenerateColumns="False">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" />
+        <DataGrid x:Name="events" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="DataGridRow_MouseDoubleClick" />
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"  />
                     <DataGridTextColumn Header="Name" Binding="{Binding Name}" />
                     <DataGridTextColumn Header="Location" Binding="{Binding Location}" />
                     <DataGridTextColumn Header="Genre" Binding="{Binding Genre}" />

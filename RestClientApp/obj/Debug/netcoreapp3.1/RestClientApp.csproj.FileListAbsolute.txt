@@ -17,3 +17,5 @@ D:\Studium\RestClientApp\RestClientApp\obj\Debug\netcoreapp3.1\RestClientApp.dll
 D:\Studium\RestClientApp\RestClientApp\obj\Debug\netcoreapp3.1\RestClientApp.pdb
 D:\Studium\RestClientApp\RestClientApp\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 D:\Studium\RestClientApp\RestClientApp\obj\Debug\netcoreapp3.1\RestClientApp.csproj.CopyComplete
+D:\Studium\RestClientApp\RestClientApp\obj\Debug\netcoreapp3.1\DetailWindow.g.cs
+D:\Studium\RestClientApp\RestClientApp\obj\Debug\netcoreapp3.1\DetailWindow.baml
